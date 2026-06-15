@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="light dark" />
+  <meta name="description" content="The Logbook — a navigator's log of your passage through the reboot01 platform, built on its GraphQL API." />
+  <title>The Logbook · reboot01</title>
+
+  <!-- Type: Spectral (display) · Archivo (UI) · Spline Sans Mono (instrument readouts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Spectral:ital,wght@0,300;0,400;0,500;0,600;1,400;1,500&family=Spline+Sans+Mono:wght@400;500;600&display=swap" />
+
+  <link rel="stylesheet" href="styles/tokens.css" />
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/login.css" />
+  <link rel="stylesheet" href="styles/dashboard.css" />
+  <link rel="stylesheet" href="styles/charts.css" />
+</head>
+<body>
+
+  <!-- ════════════════════════════ LOGIN VIEW ════════════════════════════ -->
+  <main id="login-view" class="login">
+    <!-- Left: the nameplate plate, over a faint chart graticule + voyage track -->
+    <section class="login__plate">
+      <div class="login__chart" aria-hidden="true" id="login-chart"></div>
+      <div class="login__plate-inner">
+        <p class="masthead-rule" aria-hidden="true"></p>
+        <h1 class="nameplate">The&nbsp;Logbook</h1>
+        <p class="nameplate__sub">A field log of your passage through reboot01 —
+          plotted from your own data on the school's GraphQL API.</p>
+        <p class="nameplate__coords" aria-hidden="true">26°13′N&nbsp;&nbsp;50°35′E · learn.reboot01.com</p>
+      </div>
+    </section>
+
+    <!-- Right: sign the register -->
+    <section class="register">
+      <div class="register__inner">
+        <h2 class="register__title">Sign the register</h2>
+        <p class="register__hint">Use your reboot01 username <em>or</em> email.</p>
+
+        <form id="login-form" novalidate>
+          <div class="field">
+            <label for="identifier">Username or email</label>
+            <input id="identifier" name="identifier" type="text"
+                   autocomplete="username" autocapitalize="none" spellcheck="false"
+                   required placeholder="navigator or you@reboot01.com" />
+          </div>
+
+          <div class="field">
+            <label for="password">Password</label>
+            <input id="password" name="password" type="password"
+                   autocomplete="current-password" required placeholder="••••••••" />
+          </div>
+
+          <p id="login-error" class="stamp" role="alert" aria-live="assertive" hidden></p>
+
+          <button id="login-submit" class="btn btn--primary" type="submit">
+            <span class="btn__label">Sign in</span>
+            <span class="btn__spinner" aria-hidden="true"></span>
+          </button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- ═══════════════════════════ PROFILE VIEW ═══════════════════════════ -->
+  <div id="profile-view" hidden>
+
+    <header class="masthead">
+      <div class="masthead__inner">
+        <span class="masthead__name">The&nbsp;Logbook</span>
+        <span class="masthead__meta" id="masthead-meta">—</span>
+        <span class="masthead__spacer"></span>
+        <div class="masthead__actions">
+          <button id="theme-toggle" class="icon-btn" type="button" aria-pressed="false"
+                  aria-label="Switch to night watch (dark theme)" title="Toggle theme">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path class="theme-sun" d="M12 3v2M12 19v2M5 5l1.5 1.5M17.5 17.5L19 19M3 12h2M19 12h2M5 19l1.5-1.5M17.5 6.5L19 5"/>
+              <circle class="theme-sun" cx="12" cy="12" r="3.2"/>
+              <path class="theme-moon" d="M20 14.5A7.5 7.5 0 1 1 9.5 4a6 6 0 0 0 10.5 10.5z"/>
+            </svg>
+          </button>
+          <button id="logout-btn" class="icon-btn icon-btn--danger" type="button"
+                  aria-label="Sign out" title="Sign out">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                 stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+              <polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main class="folios" id="profile-main">
+
+      <p id="profile-error" class="banner banner--error" role="alert" hidden></p>
+
+      <!-- fol. I — Identity (NORMAL query) -->
+      <section class="folio reveal" id="identity" aria-labelledby="identity-eyebrow">
+        <div class="folio__head">
+          <span class="folio__fol">fol. I</span>
+          <h2 class="folio__eyebrow" id="identity-eyebrow">Identity</h2>
+          <span class="folio__rule"></span>
+        </div>
+        <div id="identity-card"></div>
+      </section>
+
+      <!-- fol. II — Experience / XP (query with ARGUMENTS) -->
+      <section class="folio reveal" id="experience" aria-labelledby="experience-eyebrow">
+        <div class="folio__head">
+          <span class="folio__fol">fol. II</span>
+          <h2 class="folio__eyebrow" id="experience-eyebrow">Experience</h2>
+          <span class="folio__rule"></span>
+        </div>
+        <div id="experience-grid"></div>
+      </section>
+
+      <!-- fol. III — Audits & Grades (NESTED query) -->
+      <section class="folio reveal" id="audits" aria-labelledby="audits-eyebrow">
+        <div class="folio__head">
+          <span class="folio__fol">fol. III</span>
+          <h2 class="folio__eyebrow" id="audits-eyebrow">Audits &amp; Grades</h2>
+          <span class="folio__rule"></span>
+        </div>
+        <div class="audits-grid">
+          <div id="audit-summary"></div>
+          <div id="grades-list"></div>
+        </div>
+      </section>
+
+      <!-- fol. IV — Statistics (mandatory SVG section) -->
+      <section class="folio reveal" id="statistics" aria-labelledby="statistics-eyebrow">
+        <div class="folio__head">
+          <span class="folio__fol">fol. IV</span>
+          <h2 class="folio__eyebrow" id="statistics-eyebrow">Statistics</h2>
+          <span class="folio__rule"></span>
+        </div>
+
+        <figure class="plot plot--wide sheet">
+          <figcaption class="plot__cap"><span class="plot__no">Plot 1</span> Cumulative XP — the voyage track</figcaption>
+          <div class="plot__mount" id="chart-xp-line"></div>
+        </figure>
+
+        <div class="plot-grid">
+          <figure class="plot sheet">
+            <figcaption class="plot__cap"><span class="plot__no">Plot 2</span> XP earned by project</figcaption>
+            <div class="plot__mount" id="chart-xp-bars"></div>
+          </figure>
+          <figure class="plot sheet">
+            <figcaption class="plot__cap"><span class="plot__no">Plot 3</span> Project pass / fail</figcaption>
+            <div class="plot__mount" id="chart-passfail"></div>
+          </figure>
+          <figure class="plot sheet">
+            <figcaption class="plot__cap"><span class="plot__no">Plot 4</span> Audits — given vs received</figcaption>
+            <div class="plot__mount" id="chart-audit"></div>
+          </figure>
+          <figure class="plot sheet">
+            <figcaption class="plot__cap"><span class="plot__no">Plot 5</span> Skills</figcaption>
+            <div class="plot__mount" id="chart-skills"></div>
+          </figure>
+        </div>
+      </section>
+
+      <footer class="colophon">
+        <span>The Logbook</span> · hand-built with vanilla JS &amp; raw SVG ·
+        data from <span class="mono">learn.reboot01.com</span>
+      </footer>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="src/main.js"></script>
+</body>
+</html>
