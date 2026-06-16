@@ -1,0 +1,182 @@
+/* ============================================================================
+   base.css — reset, typography, the masthead nameplate, folio layout, and the
+   quality floor (visible focus, reduced motion, skeletons, a11y helpers).
+   Selector discipline: section rhythm lives ONLY on .folio / layout classes,
+   never duplicated onto element selectors, so paddings never cancel out.
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; }
+* { margin: 0; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-ui);
+  font-size: var(--fs-body);
+  line-height: 1.55;
+  color: var(--ink);
+  background-color: var(--paper);
+  /* faint lat/long graticule — chart paper, not blank cream */
+  background-image:
+    linear-gradient(var(--graticule) 1px, transparent 1px),
+    linear-gradient(90deg, var(--graticule) 1px, transparent 1px);
+  background-size: 64px 64px;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  transition: background-color var(--speed) var(--ease), color var(--speed) var(--ease);
+}
+
+h1, h2, h3 { font-family: var(--font-display); font-weight: 500; line-height: 1.1; }
+input, button, textarea { font: inherit; color: inherit; }
+button { cursor: pointer; background: none; border: none; }
+a { color: var(--accent-ink); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+svg { display: block; }
+
+::selection { background: var(--highlight); color: var(--ink); }
+
+[hidden] { display: none !important; }
+.hidden { display: none !important; }
+
+/* Visible, on-brand keyboard focus — a brass ring */
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 1px;
+}
+
+/* Screen-reader-only utility */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0;
+  margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
+}
+
+/* ─── Masthead nameplate ───────────────────────────────────────────────── */
+.masthead {
+  position: sticky; top: 0; z-index: 50;
+  background: color-mix(in srgb, var(--paper) 88%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--rule-strong);
+}
+.masthead__inner {
+  max-width: var(--measure); margin: 0 auto;
+  padding: 0.6rem var(--gutter);
+  display: flex; align-items: baseline; gap: 1rem;
+}
+.masthead__name {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: 1.05rem;
+  letter-spacing: 0.42em; text-transform: uppercase;
+  color: var(--ink);
+}
+.masthead__name::first-letter { color: var(--accent); }
+.masthead__meta {
+  font-family: var(--font-mono); font-size: 0.74rem;
+  color: var(--ink-faint); letter-spacing: 0.02em;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.masthead__spacer { flex: 1; }
+.masthead__actions { display: flex; align-items: center; gap: 0.4rem; }
+
+.icon-btn {
+  width: 38px; height: 38px; border-radius: var(--radius);
+  display: grid; place-items: center;
+  color: var(--ink-soft);
+  border: 1px solid transparent;
+  transition: color var(--speed) var(--ease), border-color var(--speed) var(--ease), background var(--speed) var(--ease);
+}
+.icon-btn:hover { color: var(--ink); border-color: var(--rule); background: var(--paper-card); }
+.icon-btn--danger:hover { color: var(--fail); border-color: color-mix(in srgb, var(--fail) 40%, transparent); }
+
+/* ─── Folio layout (the page is a sequence of dated log entries) ────────── */
+.folios {
+  max-width: var(--measure);
+  margin: 0 auto;
+  padding: clamp(1.5rem, 4vw, 3.5rem) var(--gutter) 5rem;
+  display: flex; flex-direction: column;
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+}
+
+.folio { scroll-margin-top: 4rem; }
+
+/* Section header: folio mark (roman) · eyebrow · hairline rule across */
+.folio__head {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 0.9rem;
+  margin-bottom: 1.6rem;
+}
+.folio__fol {
+  font-family: var(--font-mono); font-size: 0.7rem;
+  letter-spacing: 0.12em; color: var(--accent-ink);
+  border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  border-radius: 100px; padding: 0.12rem 0.55rem;
+}
+.folio__eyebrow {
+  font-family: var(--font-ui); font-weight: 600;
+  font-size: var(--fs-eyebrow); letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--ink-soft);
+}
+.folio__rule { height: 1px; background: var(--rule-strong); }
+
+/* ─── Cards / sheets (shared surface) ──────────────────────────────────── */
+.sheet {
+  background: var(--paper-card);
+  border: 1px solid var(--rule);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+}
+
+/* ─── Buttons ──────────────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 46px; padding: 0 1.4rem;
+  font-family: var(--font-ui); font-weight: 600;
+  font-size: 0.92rem; letter-spacing: 0.02em;
+  border-radius: var(--radius);
+  transition: transform 120ms var(--ease), filter var(--speed) var(--ease), background var(--speed) var(--ease);
+}
+/* Primary = an ink stamp on paper */
+.btn--primary { background: var(--ink); color: var(--paper-card); width: 100%; }
+.btn--primary:hover:not(:disabled) { filter: brightness(1.12); }
+.btn--primary:active:not(:disabled) { transform: translateY(1px); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; }
+
+/* ─── Loading skeleton (a faint pulse, reduced-motion aware) ───────────── */
+.skeleton {
+  display: inline-block; border-radius: var(--radius);
+  background: linear-gradient(90deg, var(--paper-sunk) 25%, color-mix(in srgb, var(--paper-sunk) 60%, var(--paper-card)) 50%, var(--paper-sunk) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s ease-in-out infinite;
+  color: transparent !important;
+}
+@keyframes shimmer { from { background-position: 200% 0; } to { background-position: -200% 0; } }
+
+/* ─── Toast (live region for session/error notices) ────────────────────── */
+.toast {
+  position: fixed; left: 50%; bottom: 1.5rem; transform: translateX(-50%) translateY(150%);
+  z-index: 200; max-width: min(92vw, 460px);
+  background: var(--ink); color: var(--paper-card);
+  font-size: 0.88rem; padding: 0.8rem 1.1rem; border-radius: var(--radius);
+  box-shadow: var(--shadow); opacity: 0;
+  transition: transform var(--speed) var(--ease), opacity var(--speed) var(--ease);
+}
+.toast.is-visible { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ─── Entrance animation (set by JS via IntersectionObserver) ──────────── */
+/* Hidden only when JS is running (main.js adds .js to <html>); if scripts
+   fail, content stays visible rather than stuck at opacity:0. */
+.js .reveal { opacity: 0; transform: translateY(14px); }
+.reveal.is-in { opacity: 1; transform: none; transition: opacity 560ms var(--ease), transform 560ms var(--ease); }
+
+/* ─── Respect reduced motion everywhere ────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+  .js .reveal { opacity: 1; transform: none; }
+}

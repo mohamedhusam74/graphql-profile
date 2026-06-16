@@ -1,0 +1,86 @@
+/* ============================================================================
+   tokens.css — "The Logbook" design system  (a navigator's log)
+   ----------------------------------------------------------------------------
+   Grounded in reboot01's own world: an island coding school whose bootcamps are
+   "piscines" (pools), whose XP is measured as data WEIGHT (bytes→kB→MB), run on
+   a give/receive peer-AUDIT economy. So the artifact is a navigator's logbook —
+   chart-ecru paper, Prussian-navy log ink, a brass accent, verdigris/​signal-red
+   for given/received & pass/fail. Deliberately NOT the warm-cream + Fraunces +
+   terracotta editorial default.
+
+   Three typefaces, one job each:
+     · Spectral          — display headlines, the masthead nameplate, folio marks
+     · Archivo           — all UI text, labels, body copy, buttons (grotesque)
+     · Spline Sans Mono  — instrument readouts: figures, axis ticks, query console
+   Everything downstream reads from these custom properties, so the whole app —
+   including the "night-watch" dark theme — re-themes from this one file.
+   ========================================================================== */
+
+:root {
+  /* ---- Chart paper & navy ink (the primary "daylight" theme) ------------ */
+  --paper:        #e7e6db;  /* cool chart ecru — the page                    */
+  --paper-card:   #f1f0e7;  /* a fresh folio sheet (raised surfaces)         */
+  --paper-sunk:   #d8d6c8;  /* recessed wells, chart tracks                  */
+  --ink:          #16263a;  /* Prussian-navy log ink — primary text          */
+  --ink-soft:     #44566a;  /* secondary text (6.0:1 on paper)               */
+  --ink-faint:    #5a6470;  /* captions, axis ticks, tertiary (4.8:1 on paper) */
+  --rule:         rgba(22, 38, 58, 0.18);  /* hairline rules (navy-tinted)   */
+  --rule-strong:  rgba(22, 38, 58, 0.46);  /* nameplate / heavy rules        */
+  --graticule:    rgba(22, 38, 58, 0.045); /* faint lat/long chart grid      */
+
+  /* ---- Signature hues ---------------------------------------------------- */
+  /* NOTE: --accent (3.7:1 on paper) is for non-text / large-display / borders
+     only. Any small brass TEXT must use --accent-ink (5.4:1) — never demote
+     readable text to --accent. */
+  --accent:       #9a6a2f;  /* brass — nameplate, links, active, focus        */
+  --accent-ink:   #7c5322;  /* darker brass for brass-on-paper text contrast  */
+  --pass:         #2f6d5b;  /* verdigris green — pass / audits GIVEN           */
+  --fail:         #b23a2e;  /* signal-flag red — fail / audits RECEIVED        */
+  --highlight:    #c8a24a;  /* brass highlight, used sparingly                 */
+
+  /* ---- Typefaces --------------------------------------------------------- */
+  --font-display: "Spectral", "Iowan Old Style", Georgia, serif;
+  --font-ui:      "Archivo", system-ui, "Helvetica Neue", Arial, sans-serif;
+  --font-mono:    "Spline Sans Mono", "SFMono-Regular", Consolas, monospace;
+
+  /* ---- Modular type scale (≈1.25 major-third on a 16px base) ------------- */
+  --fs-eyebrow: 0.72rem;
+  --fs-meta:    0.82rem;
+  --fs-body:    1rem;
+  --fs-lead:    1.18rem;
+  --fs-h3:      1.4rem;
+  --fs-h2:      2rem;
+  --fs-h1:      clamp(2.4rem, 5.5vw, 3.7rem);
+  --fs-figure:  clamp(2.6rem, 6vw, 4rem);   /* the giant instrument numbers   */
+
+  /* ---- Rhythm, radii, motion -------------------------------------------- */
+  --gutter:     clamp(1rem, 3vw, 2.5rem);
+  --measure:    1100px;          /* max layout width                         */
+  --radius:     2px;             /* paper is barely rounded                  */
+  --radius-lg:  4px;
+  --shadow:     0 1px 0 rgba(22,38,58,0.06), 0 14px 32px -20px rgba(22,38,58,0.5);
+  --ease:       cubic-bezier(0.22, 0.61, 0.36, 1);
+  --speed:      460ms;
+
+  color-scheme: light;
+}
+
+/* ---- "Night watch" — inverted ink-on-deep-sea dark theme ----------------- */
+:root[data-theme="dark"] {
+  --paper:        #0e1822;  /* night sea                                      */
+  --paper-card:   #13212e;
+  --paper-sunk:   #0a131b;
+  --ink:          #e7e6db;  /* chart-ecru ink on dark                         */
+  --ink-soft:     #aeb6bf;
+  --ink-faint:    #8a949f;  /* 5.3:1 on dark card — clears AA for body text   */
+  --rule:         rgba(231, 230, 219, 0.16);
+  --rule-strong:  rgba(231, 230, 219, 0.40);
+  --graticule:    rgba(231, 230, 219, 0.05);
+  --accent:       #cf9a4e;  /* brighter brass                                 */
+  --accent-ink:   #e2b265;
+  --pass:         #5fa98f;
+  --fail:         #d9614f;
+  --highlight:    #d8b65a;
+  --shadow:       0 1px 0 rgba(0,0,0,0.4), 0 16px 36px -20px rgba(0,0,0,0.85);
+  color-scheme: dark;
+}

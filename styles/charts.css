@@ -1,0 +1,44 @@
+/* ============================================================================
+   charts.css — the statistics folio: figures, captions, legend, tooltip.
+   The SVG itself is built in JS; this styles the frame around each plot.
+   ========================================================================== */
+
+.plot { margin: 0; padding: 1.3rem 1.4rem 1.5rem; overflow: hidden; }
+.plot__cap {
+  font-family: var(--font-ui); font-weight: 600; font-size: 0.78rem;
+  letter-spacing: 0.03em; color: var(--ink-soft);
+  margin-bottom: 1rem; display: flex; align-items: baseline; gap: 0.6rem;
+}
+.plot__no {
+  font-family: var(--font-mono); font-size: 0.64rem; color: var(--accent-ink);
+  border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+  border-radius: 2px; padding: 0.04rem 0.35rem; letter-spacing: 0.04em; white-space: nowrap;
+}
+.plot__mount { min-height: 120px; }
+.plot__mount svg { max-width: 100%; }
+
+.plot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gutter); margin-top: var(--gutter); }
+
+.plot__empty { color: var(--ink-faint); font-size: 0.85rem; text-align: center; padding: 2.6rem 1rem; }
+
+.plot__legend { display: flex; gap: 1.4rem; justify-content: center; margin-top: 0.85rem; flex-wrap: wrap; }
+.plot__legend-item { display: flex; align-items: center; gap: 0.4rem; font-size: 0.8rem; color: var(--ink-soft); }
+.plot__legend-item i { width: 9px; height: 9px; border-radius: 2px; display: inline-block; }
+.plot__legend-item b { color: var(--ink); font-family: var(--font-mono); margin-left: 0.15rem; }
+
+/* Shared hover tooltip (appended to <body> by charts/svg.js) */
+.chart-tip {
+  position: fixed; z-index: 300; pointer-events: none;
+  background: var(--ink); color: var(--paper-card);
+  font-family: var(--font-ui); font-size: 0.76rem; line-height: 1.4;
+  padding: 0.45rem 0.65rem; border-radius: var(--radius);
+  box-shadow: var(--shadow); max-width: 240px;
+  opacity: 0; transform: translateY(4px);
+  transition: opacity 140ms var(--ease), transform 140ms var(--ease);
+}
+.chart-tip.is-visible { opacity: 1; transform: none; }
+.chart-tip b { color: var(--paper-card); }
+
+@media (max-width: 760px) {
+  .plot-grid { grid-template-columns: 1fr; }
+}

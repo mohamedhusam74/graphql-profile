@@ -1,0 +1,95 @@
+/* ============================================================================
+   dashboard.css — the four data folios.
+   ========================================================================== */
+
+/* Theme toggle: show the moon in daylight, the sun at night. */
+:root[data-theme="light"] .theme-sun { display: none; }
+:root[data-theme="dark"]  .theme-moon { display: none; }
+
+/* Error banner */
+.banner { border-radius: var(--radius); padding: 0.9rem 1.1rem; font-size: 0.9rem; }
+.banner--error {
+  color: var(--fail);
+  border: 1px solid color-mix(in srgb, var(--fail) 40%, transparent);
+  background: color-mix(in srgb, var(--fail) 8%, transparent);
+}
+
+/* ── fol. I — Identity ──────────────────────────────────────────────────── */
+.id-card { display: flex; gap: clamp(1.2rem, 3vw, 2rem); align-items: center; padding: clamp(1.4rem, 3vw, 2rem); }
+.id-card__mono {
+  width: 96px; height: 96px; flex-shrink: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  font-family: var(--font-display); font-size: 2.6rem; color: var(--accent);
+  background: color-mix(in srgb, var(--accent) 8%, var(--paper));
+  border: 1.5px solid color-mix(in srgb, var(--accent) 45%, transparent);
+}
+.id-card__body { min-width: 0; }
+.id-card__name { font-size: var(--fs-h2); font-weight: 600; line-height: 1.05; }
+.id-card__handle { font-family: var(--font-mono); color: var(--accent-ink); font-size: 0.9rem; margin-top: 0.15rem; }
+.ledger { margin-top: 1.1rem; display: grid; gap: 0; }
+.ledger__row {
+  display: grid; grid-template-columns: 9rem 1fr; gap: 0.6rem;
+  padding: 0.45rem 0; border-top: 1px dotted var(--rule);
+}
+.ledger dt { color: var(--ink-faint); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.66rem; align-self: center; }
+.ledger dd { color: var(--ink); font-family: var(--font-mono); font-size: 0.82rem; word-break: break-word; }
+.level-badge {
+  display: inline-block; font-family: var(--font-ui); font-weight: 600;
+  font-size: 0.72rem; letter-spacing: 0.04em; color: var(--accent-ink);
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  border-radius: 100px; padding: 0.15rem 0.65rem;
+}
+
+/* ── fol. II — Experience ───────────────────────────────────────────────── */
+.feature-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: var(--gutter); align-items: stretch; }
+.feature { padding: clamp(1.5rem, 3.5vw, 2.4rem); display: flex; flex-direction: column; justify-content: center; }
+.feature__label { font-family: var(--font-ui); font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; font-size: 0.72rem; color: var(--ink-soft); }
+.feature__value { font-family: var(--font-mono); font-weight: 600; font-size: var(--fs-figure); line-height: 1; color: var(--accent-ink); margin: 0.4rem 0; letter-spacing: -0.02em; }
+.feature__note { color: var(--ink-faint); font-size: var(--fs-meta); }
+.tiles { display: grid; gap: var(--gutter); grid-template-rows: repeat(3, 1fr); }
+.tile { padding: 1.1rem 1.3rem; display: flex; flex-direction: column; justify-content: center; }
+.tile__label { font-family: var(--font-ui); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.66rem; color: var(--ink-soft); }
+.tile__value { font-family: var(--font-mono); font-weight: 600; font-size: 1.8rem; color: var(--ink); line-height: 1; margin: 0.2rem 0; }
+.tile__note { color: var(--ink-faint); font-size: 0.74rem; }
+
+/* ── fol. III — Audits & Grades ─────────────────────────────────────────── */
+.audits-grid { display: grid; grid-template-columns: 0.85fr 1.15fr; gap: var(--gutter); align-items: start; }
+.audit { padding: clamp(1.4rem, 3vw, 2rem); }
+.audit__label { font-family: var(--font-ui); font-weight: 600; text-transform: uppercase; letter-spacing: 0.16em; font-size: 0.72rem; color: var(--ink-soft); }
+.audit__value { font-family: var(--font-mono); font-weight: 600; font-size: var(--fs-figure); line-height: 1; margin: 0.3rem 0 1rem; }
+.audit__value.is-good { color: var(--pass); }
+.audit__value.is-low { color: var(--fail); }
+.audit__lines { list-style: none; display: grid; gap: 0.5rem; }
+.audit__lines li { display: flex; align-items: center; gap: 0.5rem; font-size: var(--fs-meta); color: var(--ink-soft); }
+.audit__lines b { margin-left: auto; font-family: var(--font-mono); color: var(--ink); }
+.swatch { width: 10px; height: 10px; border-radius: 2px; flex-shrink: 0; }
+.swatch--given { background: var(--pass); }
+.swatch--received { background: var(--fail); }
+
+.grades { padding: clamp(1.2rem, 3vw, 1.6rem); }
+.grades__title { font-family: var(--font-ui); font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; font-size: 0.7rem; color: var(--ink-soft); margin-bottom: 0.6rem; }
+.grades__list { list-style: none; display: grid; }
+.grades__row { display: grid; grid-template-columns: 1fr auto auto; gap: 0.8rem; align-items: center; padding: 0.6rem 0; border-top: 1px dotted var(--rule); }
+.grades__row:first-child { border-top: none; }
+.grades__name { font-size: 0.9rem; color: var(--ink); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.grades__tag { font-family: var(--font-ui); font-weight: 600; font-size: 0.66rem; text-transform: uppercase; letter-spacing: 0.06em; padding: 0.12rem 0.55rem; border-radius: 100px; }
+.grades__tag.is-pass { color: var(--pass); background: color-mix(in srgb, var(--pass) 14%, transparent); }
+.grades__tag.is-fail { color: var(--fail); background: color-mix(in srgb, var(--fail) 14%, transparent); }
+.grades__date { font-family: var(--font-mono); font-size: 0.72rem; color: var(--ink-faint); }
+
+/* ── Colophon ───────────────────────────────────────────────────────────── */
+.colophon { margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule); font-size: 0.78rem; color: var(--ink-faint); text-align: center; }
+.colophon span:first-child { font-family: var(--font-display); color: var(--ink-soft); }
+.mono { font-family: var(--font-mono); }
+
+/* ── Responsive ─────────────────────────────────────────────────────────── */
+@media (max-width: 820px) {
+  .feature-grid, .audits-grid { grid-template-columns: 1fr; }
+  .tiles { grid-template-rows: none; grid-template-columns: repeat(3, 1fr); }
+}
+@media (max-width: 520px) {
+  .id-card { flex-direction: column; text-align: center; }
+  .ledger__row { grid-template-columns: 1fr; gap: 0; text-align: left; }
+  .tiles { grid-template-columns: 1fr; }
+}

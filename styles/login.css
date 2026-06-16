@@ -1,0 +1,94 @@
+/* ============================================================================
+   login.css — the sign-in view: a nameplate "cover" beside a register card.
+   ========================================================================== */
+
+.login {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1.08fr 0.92fr;
+}
+
+/* ── Left: the nameplate plate, over a faint plotted track ──────────────── */
+.login__plate {
+  position: relative; overflow: hidden;
+  border-right: 1px solid var(--rule-strong);
+  padding: clamp(2rem, 6vw, 5rem);
+  display: flex; flex-direction: column; justify-content: center;
+}
+.login__chart {
+  position: absolute; inset: 0; z-index: 0;
+  opacity: 0.5; pointer-events: none;
+  -webkit-mask-image: linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent);
+          mask-image: linear-gradient(180deg, transparent, #000 30%, #000 80%, transparent);
+}
+.login__plate-inner { position: relative; z-index: 1; max-width: 30rem; }
+
+.masthead-rule { width: 56px; height: 3px; background: var(--accent); margin-bottom: 1.6rem; }
+.masthead-rule::after { content: ''; display: block; width: 56px; height: 1px; background: var(--rule-strong); margin-top: 3px; }
+
+.nameplate {
+  font-family: var(--font-display);
+  font-weight: 600; font-size: var(--fs-h1);
+  line-height: 0.98; letter-spacing: -0.01em;
+  margin-bottom: 1.1rem;
+}
+.nameplate::first-letter { color: var(--accent); }
+.nameplate__sub { font-size: var(--fs-lead); color: var(--ink-soft); max-width: 34ch; line-height: 1.5; }
+.nameplate__coords {
+  margin-top: 2rem; font-family: var(--font-mono);
+  font-size: 0.74rem; letter-spacing: 0.08em; color: var(--ink-faint);
+}
+
+/* ── Right: sign the register ───────────────────────────────────────────── */
+.register { display: grid; place-items: center; padding: clamp(1.5rem, 5vw, 3rem); }
+.register__inner { width: 100%; max-width: 360px; }
+.register__title { font-family: var(--font-display); font-size: var(--fs-h2); font-weight: 500; }
+.register__hint { color: var(--ink-faint); font-size: var(--fs-meta); margin: 0.35rem 0 1.8rem; }
+.register__hint em { font-style: italic; color: var(--ink-soft); }
+
+.field { margin-bottom: 1.4rem; }
+.field label {
+  display: block; font-family: var(--font-ui); font-weight: 600;
+  font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase;
+  color: var(--ink-soft); margin-bottom: 0.5rem;
+}
+.field input {
+  width: 100%; background: transparent; border: none;
+  border-bottom: 1.5px solid var(--rule-strong);
+  padding: 0.55rem 0.1rem; font-size: 1rem; color: var(--ink);
+  transition: border-color var(--speed) var(--ease);
+}
+.field input::placeholder { color: var(--ink-faint); }
+.field input:focus { outline: none; border-bottom-color: var(--accent); }
+
+/* Error shown as a refused ink stamp */
+.stamp {
+  color: var(--fail);
+  border: 1.5px solid color-mix(in srgb, var(--fail) 55%, transparent);
+  background: color-mix(in srgb, var(--fail) 9%, transparent);
+  border-radius: var(--radius);
+  padding: 0.65rem 0.85rem; font-size: 0.85rem; line-height: 1.45;
+  margin-bottom: 1.1rem;
+}
+.stamp::before { content: '✕  '; font-weight: 700; }
+
+/* Button spinner + shake */
+.btn__spinner {
+  width: 16px; height: 16px; border-radius: 50%;
+  border: 2px solid color-mix(in srgb, currentColor 35%, transparent);
+  border-top-color: currentColor; display: none;
+}
+.btn.is-loading .btn__spinner { display: inline-block; animation: spin 0.7s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  20%, 60% { transform: translateX(-5px); }
+  40%, 80% { transform: translateX(5px); }
+}
+.shake { animation: shake 0.4s var(--ease); }
+
+@media (max-width: 860px) {
+  .login { grid-template-columns: 1fr; }
+  .login__plate { min-height: 36vh; border-right: none; border-bottom: 1px solid var(--rule-strong); }
+}
