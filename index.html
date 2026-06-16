@@ -1,11 +1,11 @@
-<!DOCTYPE html>
+l<!DOCTYPE html>
 <html lang="en" data-theme="light">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="color-scheme" content="light dark" />
   <meta name="description" content="The Logbook — a navigator's log of your passage through the reboot01 platform, built on its GraphQL API." />
-  <title>The Logbook · reboot01</title>
+  <title>Reboot01 Profile</title>
 
   <!-- Type: Spectral (display) · Archivo (UI) · Spline Sans Mono (instrument readouts) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -28,25 +28,22 @@
       <div class="login__chart" aria-hidden="true" id="login-chart"></div>
       <div class="login__plate-inner">
         <p class="masthead-rule" aria-hidden="true"></p>
-        <h1 class="nameplate">The&nbsp;Logbook</h1>
-        <p class="nameplate__sub">A field log of your passage through reboot01 —
-          plotted from your own data on the school's GraphQL API.</p>
-        <p class="nameplate__coords" aria-hidden="true">26°13′N&nbsp;&nbsp;50°35′E · learn.reboot01.com</p>
+        <h1 class="nameplate">The&nbsp;Reboot01 profile page</h1>
       </div>
     </section>
 
     <!-- Right: sign the register -->
     <section class="register">
       <div class="register__inner">
-        <h2 class="register__title">Sign the register</h2>
-        <p class="register__hint">Use your reboot01 username <em>or</em> email.</p>
+        <h2 class="register__title">Sign in</h2>
+        <p class="register__hint">Use your Reboot01 username <em>or</em> email.</p>
 
         <form id="login-form" novalidate>
           <div class="field">
             <label for="identifier">Username or email</label>
             <input id="identifier" name="identifier" type="text"
                    autocomplete="username" autocapitalize="none" spellcheck="false"
-                   required placeholder="navigator or you@reboot01.com" />
+                   required placeholder="username or email" />
           </div>
 
           <div class="field">
