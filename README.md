@@ -58,7 +58,7 @@ graphql/
 
 ## Technologies Used
 
-- **Frontend**: Vanilla JavaScript (ES modules), HTML5, CSS3
+- **Frontend**: Vanilla JavaScript (ES modules), HTML5, CSS
 - **Charts**: Hand-built SVG, no external library
 - **Authentication**: JWT tokens with Bearer authentication
 - **API**: GraphQL for all data
