@@ -66,6 +66,19 @@ export function isGradedProject(path) {
 }
 
 /**
+ * Onboarding / event entries the platform records as "passed" but which aren't
+ * real cursus projects. Excluded from every project-level view (the grades
+ * ledger, projects-passed count, pass/fail donut, and XP-by-project bars) so the
+ * list shows only actual projects. Matched on the displayed name, case-insensitive.
+ */
+const NON_PROJECT_NAMES = new Set(['administration', 'online cognitive games']);
+
+/** @param {string} name @returns {boolean} true if this is a non-project entry. */
+export function isExcludedName(name) {
+  return NON_PROJECT_NAMES.has(String(name || '').trim().toLowerCase());
+}
+
+/**
  * Keep only main-cursus XP rows. Scoped by PATH only (not amount) so the total
  * equals a straight GraphiQL sum over type="xp" on the cursus — including any
  * 0 / negative correction rows the platform might record.
@@ -103,6 +116,7 @@ export function xpByProject(transactions, limit = 8) {
   for (const tx of transactions) {
     // Prefer the nested object.name (a stable project id) over the path heuristic.
     const name = tx.object?.name || projectName(tx.path);
+    if (isExcludedName(name)) continue; // skip onboarding/event entries
     totals.set(name, (totals.get(name) || 0) + tx.amount);
   }
   return [...totals.entries()]
@@ -134,6 +148,7 @@ export function passFailCounts(results, moduleTransactions = []) {
   for (const r of results) {
     if (!isGradedProject(r.path)) continue;
     const name = r.object?.name || projectName(r.path);
+    if (isExcludedName(name)) continue; // skip onboarding/event entries
     if (!latest.has(name)) latest.set(name, r.grade); // first seen = newest
   }
   let fail = 0;
@@ -160,6 +175,7 @@ export function gradeLedger(moduleTransactions, results, limit = 8) {
   for (const tx of moduleTransactions) {
     if (!(tx.amount > 0)) continue; // only XP-earning rows mark a pass
     const name = tx.object?.name || projectName(tx.path);
+    if (isExcludedName(name)) continue; // skip onboarding/event entries
     const prev = rows.get(name);
     if (!prev) rows.set(name, { name, pass: true, date: tx.createdAt });
     else if (new Date(tx.createdAt) > new Date(prev.date)) prev.date = tx.createdAt;
@@ -169,6 +185,7 @@ export function gradeLedger(moduleTransactions, results, limit = 8) {
   for (const r of results) {
     if (!isGradedProject(r.path)) continue;
     const name = r.object?.name || projectName(r.path);
+    if (isExcludedName(name)) continue; // skip onboarding/event entries
     if (rows.has(name)) continue; // already a pass via XP
     rows.set(name, { name, pass: r.grade > 0, date: r.createdAt });
   }
