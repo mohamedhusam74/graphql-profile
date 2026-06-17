@@ -17,6 +17,15 @@
 .plot__mount { min-height: 120px; }
 .plot__mount svg { max-width: 100%; }
 
+/* XP-by-project lists every project, so cap the height and scroll inside the plot. */
+#chart-xp-bars {
+  max-height: 340px; overflow-y: auto; overscroll-behavior: contain;
+  scrollbar-width: thin; scrollbar-color: var(--rule-strong) transparent;
+}
+#chart-xp-bars::-webkit-scrollbar { width: 8px; }
+#chart-xp-bars::-webkit-scrollbar-thumb { background: var(--rule-strong); border-radius: 100px; }
+#chart-xp-bars::-webkit-scrollbar-track { background: transparent; }
+
 .plot-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--gutter); margin-top: var(--gutter); }
 
 .plot__empty { color: var(--ink-faint); font-size: 0.85rem; text-align: center; padding: 2.6rem 1rem; }

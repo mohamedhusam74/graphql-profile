@@ -256,7 +256,7 @@ export async function fetchProfile() {
     pass,
     fail,
     cumulative: cumulativeSeries(moduleTx),
-    topProjects: xpByProject(moduleTx, 8),
+    topProjects: xpByProject(moduleTx, Infinity), // all projects, sorted by XP desc
     skills: aggregateSkills(skillData.transaction, 6),
     gradeLedger: gradeLedger(moduleTx, resultData.result, Infinity), // fol. III — every project, scrollable
   };
