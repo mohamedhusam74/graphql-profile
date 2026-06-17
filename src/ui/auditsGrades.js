@@ -61,12 +61,17 @@ function gradeRow(entry) {
 export function renderGrades(mount, profile) {
   const ledger = profile.gradeLedger || [];
 
+  // Show every project, newest first, in a scrollable well so the card stays a
+  // sensible height no matter how many projects there are.
   const body = ledger.length
-    ? h('ul', { class: 'grades__list' }, ...ledger.map(gradeRow))
+    ? h('div', { class: 'grades__scroll' },
+        h('ul', { class: 'grades__list' }, ...ledger.map(gradeRow)))
     : h('p', { class: 'plot__empty' }, 'No graded projects yet.');
 
   const card = h('div', { class: 'grades sheet' },
-    h('div', { class: 'grades__title' }, 'Recent grades'),
+    h('div', { class: 'grades__title' },
+      'All projects',
+      h('span', { class: 'grades__count' }, String(ledger.length))),
     body,
   );
 

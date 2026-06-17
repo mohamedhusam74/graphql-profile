@@ -241,6 +241,6 @@ export async function fetchProfile() {
     cumulative: cumulativeSeries(moduleTx),
     topProjects: xpByProject(moduleTx, 8),
     skills: aggregateSkills(skillData.transaction, 6),
-    gradeLedger: gradeLedger(moduleTx, resultData.result, 8), // fol. III recent grades
+    gradeLedger: gradeLedger(moduleTx, resultData.result, Infinity), // fol. III — every project, scrollable
   };
 }
