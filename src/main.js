@@ -53,7 +53,7 @@ function setLoadingState() {
   document.getElementById('experience-grid').replaceChildren(skeletonSheet('30%', '70%'));
   document.getElementById('audit-summary').replaceChildren(skeletonSheet('40%', '55%'));
   document.getElementById('grades-list').replaceChildren(skeletonSheet('80%', '80%', '80%'));
-  for (const id of ['chart-xp-line', 'chart-xp-bars', 'chart-passfail', 'chart-audit', 'chart-skills']) {
+  for (const id of ['chart-xp-bars', 'chart-passfail', 'chart-audit', 'chart-skills']) {
     document.getElementById(id).replaceChildren(h('div', { class: 'skeleton', style: 'height:180px;width:100%;border-radius:4px' }));
   }
 }

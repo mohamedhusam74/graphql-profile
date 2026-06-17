@@ -101,15 +101,6 @@ export function projectName(path, fallback = '—') {
   return parts[parts.length - 1] || fallback;
 }
 
-/** Running cumulative XP series, ordered by date (input is already asc). */
-export function cumulativeSeries(transactions) {
-  let running = 0;
-  return transactions.map((tx) => {
-    running += tx.amount;
-    return { date: new Date(tx.createdAt), amount: tx.amount, cumulative: running };
-  });
-}
-
 /** Top N projects by total XP earned. */
 export function xpByProject(transactions, limit = 8) {
   const totals = new Map();
@@ -255,7 +246,6 @@ export async function fetchProfile() {
     audit: { up, down, ratio: down > 0 ? up / down : up > 0 ? Infinity : 0 },
     pass,
     fail,
-    cumulative: cumulativeSeries(moduleTx),
     topProjects: xpByProject(moduleTx, Infinity), // all projects, sorted by XP desc
     skills: aggregateSkills(skillData.transaction, 6),
     gradeLedger: gradeLedger(moduleTx, resultData.result, Infinity), // fol. III — every project, scrollable

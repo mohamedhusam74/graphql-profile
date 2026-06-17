@@ -4,7 +4,6 @@
 // re-read the (theme-dependent) CSS colours and re-fit the viewport.
 // ============================================================================
 
-import { drawXpLine } from '../charts/lineChart.js';
 import { drawXpBars } from '../charts/barChart.js';
 import { drawPassFail } from '../charts/donutChart.js';
 import { drawAudit } from '../charts/auditChart.js';
@@ -16,7 +15,6 @@ import { drawSkills } from '../charts/radarChart.js';
  */
 export function renderStatistics(profile) {
   const mounts = {
-    line: document.getElementById('chart-xp-line'),
     bars: document.getElementById('chart-xp-bars'),
     passfail: document.getElementById('chart-passfail'),
     audit: document.getElementById('chart-audit'),
@@ -24,7 +22,6 @@ export function renderStatistics(profile) {
   };
 
   const redraw = () => {
-    if (mounts.line) drawXpLine(mounts.line, profile.cumulative);
     if (mounts.bars) drawXpBars(mounts.bars, profile.topProjects);
     if (mounts.passfail) drawPassFail(mounts.passfail, profile.pass, profile.fail);
     if (mounts.audit) drawAudit(mounts.audit, profile.audit.up, profile.audit.down);
