@@ -231,7 +231,12 @@ export async function fetchProfile() {
     gqlRequest(QUERIES.SKILLS, { userId }),
   ]);
 
-  const moduleTx = moduleXP(xpData.transaction);
+  // Every type="xp" row: main-cursus projects, the piscines, and exams. This is
+  // the user's true total XP (matches the platform's headline figure).
+  const allXpTx = xpData.transaction;
+  // The main-cursus subset still drives the project-level breakdowns (bar chart,
+  // pass/fail, grades ledger) so those stay about actual projects.
+  const moduleTx = moduleXP(allXpTx);
   const up = auditData.up.aggregate.sum.amount ?? 0;
   const down = auditData.down.aggregate.sum.amount ?? 0;
   const { pass, fail } = passFailCounts(resultData.result, moduleTx);
@@ -240,7 +245,7 @@ export async function fetchProfile() {
     user,
     userId,
     level: levelData.transaction[0]?.amount ?? 0,
-    totalXP: sumXP(moduleTx),
+    totalXP: sumXP(allXpTx),
     // ratio = given ÷ received; if you've given but never received, that's a
     // "perfect" (infinite) ratio, not zero — the UI renders Infinity as "∞".
     audit: { up, down, ratio: down > 0 ? up / down : up > 0 ? Infinity : 0 },
