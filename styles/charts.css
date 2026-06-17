@@ -17,6 +17,10 @@
 .plot__mount { min-height: 120px; }
 .plot__mount svg { max-width: 100%; }
 
+/* Pass/fail donut: don't let it balloon to the full card width — keep it small
+   and centred. */
+#chart-passfail svg { max-width: 168px; margin-inline: auto; }
+
 /* XP-by-project lists every project, so cap the height and scroll inside the plot. */
 #chart-xp-bars {
   max-height: 340px; overflow-y: auto; overscroll-behavior: contain;
